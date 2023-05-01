@@ -1,0 +1,26 @@
+# Create a VPC
+# Create an internet gateway for the VPC
+# Create custome route table for the VPC
+# Create a subnet in the VPC in single availability zone
+# Assosiate subnet with the route table
+# Create a security group to allow inbound traffic from port 80, 443, and 22
+# Create a network interface with an ip in the subnet
+# Assign an elastic IP to the network interface
+# Launch ubuntu ec2 (t2.micro) machine, install apache using user data script
+
+
+global:
+  scrape_interval: 15s
+  external_labels:
+    monitor: 'prometheus'
+
+scrape_configs:
+  - job_name: 'node'
+    ec2_sd_configs:
+      - region: us-east-2
+        access_key: AKIAUFHFO56IO4NSGSEZ
+        secret_key: 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
+        port: 9100
+
+http://localhost:9090
+https://grafana.com/grafana/dashboards/1860

@@ -1,0 +1,53 @@
+# Write a custom dockerfile for a simple express nodejs webapp and build an image
+# Use that image along with redis image to launch an webapp using docker-compose
+# Build development react webapp image using dockerfile
+# Build production quality image of react webapp using nginx with help of multi-stage dockerfile
+# Build images of complex react webapp, worker node app, and a express server app
+# Deploy the application using docker-compose and docker-volumes with additional images of redis,
+nginx, and postgres
+# Deploy nginx routing policies based upon url 
+
+--------------------------------------------------------------------------------------------------
+
+# Use the official Node.js image as a parent image
+FROM node:16-alpine
+
+# Create and set the working directory in the container
+WORKDIR /usr/src/app
+
+# Copy the package.json and package-lock.json files to the container
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application code to the container
+COPY . .
+
+# Expose port 3000 for the application to listen on
+EXPOSE 3000
+
+# Start the application when the container is run
+CMD ["npm", "start"]
+
+--------------------------------------------------------------------------------------------------
+FROM node as build
+WORKDIR /app
+COPY package.json .
+RUN npm install
+COPY . .
+RUN npm run build
+
+# production environment
+FROM nginx
+COPY  --from=build /app/build /usr/share/nginx/html
+RUN rm /etc/nginx/conf.d/default.conf
+COPY  --from=build /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+
+----------------------------------------------------------------------------------------------------
+
+dckr_pat_Vrex9mVD5wWPnrRLgZbwSTBzolo
+
+docker pull account1996/nodeappimage:1

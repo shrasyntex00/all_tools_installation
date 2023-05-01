@@ -1,0 +1,63 @@
+sonarqubetest
+
+339ccb65e9930e2df04d93cf458a0c52731eb693
+
+// stage('Run Sonar scans with quality gate') {
+        //     steps {
+        //         withSonarQubeEnv('sonarqubeserver') {
+        //             sh 'mvn clean package sonar:sonar'
+        //         }
+                
+        //         timeout(time: 1, unit: 'HOURS') {
+        //             def qg = waitForQualityGate()
+        //             if (qg.status != 'OK') {
+        //                 error "Pipeline aborted due to quality gate failure: ${qg.status}"
+        //             }
+        //         }
+        //     }    
+        // }
+
+nexusArtifactUploader artifacts: [
+                    [
+                        artifactId: 'java-web-app',
+                        classifier: '',
+                        file: 'target/java-web-app-1.0.war',
+                        type: 'war'
+                    ]
+    
+                ],
+                    credentialsId: 'Nexuscred',
+                    groupId: 'com.mt',
+                    nexusUrl: '3.109.143.126:8081',
+                    nexusVersion: 'nexus2',
+                    protocol: 'http',
+                    repository: 'test-release',
+                    version: '1.0'
+            }
+
+#####-----------------------------------
+
+stage('Upload war to Nexus'){
+
+            steps{
+
+                script{                                       
+                    def readPomVersion = readMavenPom file: 'pom.xml'
+                    def nexusRepo = readPomVersion.version.endsWith("SNAPSHOT") ? "skan-snapshot" : "skanjob"
+                    nexusArtifactUploader artifacts: 
+                        [[artifactId: 'dockeransible',
+                          classifier: '',
+                          file: 'target/dockeransible.war', 
+                          type: 'war']], 
+                        credentialsId: 'nexus-pwd', 
+                        groupId: 'in.javahome',
+                        nexusUrl: '13.40.36.65:8081', 
+                        nexusVersion: 'nexus3',
+                        protocol: 'http',
+                        repository: 'nexusRepo', 
+                        version: "${readPomVersion.version}"
+
+                }
+              }
+
+          }

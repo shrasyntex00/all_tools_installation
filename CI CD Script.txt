@@ -1,0 +1,33 @@
+node{
+    stage('git clone'){
+        git 'https://github.com/shrasyntex00/java-web-app-docker.git'
+    }
+    stage('Build'){
+        def mavenHome = tool name: ""
+        sh "${mavenHome}/bin/mvn clean package"
+    }
+    stage ('running test cases') {
+        sh "mvn test"
+    }
+    
+    stage ('nexus deploy'){
+        sh "mvn deploy"
+    }
+    stage ('deploy to tomcat') {
+        deploy adapters: [tomcat9(credentialsId: 'cefc1c4e-fdf9-4f16-921d-c6cfe67330af', path: '', url: 'http://3.110.55.14:8082/')], contextPath: null, war: '**/*.war'
+    }
+    stage('Build docker image'){
+        sh 'docker build -t account1996/java:1 .'
+    }
+    stage('Dockerhub Push'){
+        sh 'docker login -u account1996 -p Rahul@1996'
+        sh 'docker push account1996/java:1'
+    }
+    stage('Deploy to Kubernetes Cluster'){
+        kubernetesDeploy(
+              config: 'Replicaset Manefests File.yaml',
+              kubeconfigId:'KUBERNETES_CLUSTER_CONFIG',
+              enableConfigSubstitution: true
+            )
+    }
+}

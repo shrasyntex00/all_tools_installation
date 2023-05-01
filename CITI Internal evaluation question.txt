@@ -1,0 +1,9 @@
+- Tell me about your profile and experience ?
+- Have you worked on linux administration ?
+- What is command to check disc free space & CPU utilization ?
+- What is Sonarqube ?
+- What is code coverage in sonarqube ?
+- If we have git repository in github and bitbucket, how we can pull to edit in our local system,
+what are the steps to push the changes in same branch.
+- Have you worked on any deployment like ci-cd, docker or kubernetes ?
+- Shift flexibility is fine like - night and morning 

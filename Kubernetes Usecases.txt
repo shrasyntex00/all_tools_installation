@@ -1,0 +1,12 @@
+Kubernetes Use Cases - 
+
+# Create a pod for simple webapp using yaml file
+# Create a nodePort service to expose the pod to the outside world using yaml
+# Create the deployment for the same webapp using yaml
+
+# Creating deployments for express server, react server and worker node using yaml configuration files with own images
+# Creating a deployments for redis, postgres using yaml configuration files with standard images
+# Create clusterIP services for express server, react server, redis, postgres using yaml configuration files
+# Create a persistent volume claim and mount the volume to postgre deployment
+# Create an ingress service to route the traffic from outside world to the clusterIP services
+# Create a secrete for postgres using imperative approach 

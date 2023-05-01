@@ -1,0 +1,90 @@
+Shell Script Use Cases -
+Shell script to find the files created and its sizes. It should accept i) the number of days as input and ii) a from and to date format as inputs.
+Write Shell script to monitor CPU, Memory and Disk usage and send the output to a file in table format. Also send mail if any of the metrics breaches threshold
+
+/home/ubuntu/fpath
+
+
+lgblwsjpjjtiiwuj
+
+sendmail: warning: /etc/postfix/main.cf, line 55: overriding earlier entry: smtp_tls_security_level=may
+postdrop: warning: /etc/postfix/main.cf, line 55: overriding earlier entry: smtp_tls_security_level=may
+From: rs02371@gmail.com
+Subject: Test mail
+Testing email
+
+Than you 
+.
+
+9902506922
+
+
+
+#!/bin/bash
+cpuuse=$(cat /proc/loadavg | awk '{print $3}'|cut -f 1 -d ".")
+if [ "$cpuuse" -ge 50 ]; then
+SUBJECT="ATTENTION: CPU load is high on $(hostname) at $(date)"
+MESSAGE="/tmp/Mail.out"
+TO="shrasyntex00@gmail.com"
+  echo "CPU current usage is: $cpuuse%" >> $MESSAGE
+  echo "" >> $MESSAGE
+  echo "+------------------------------------------------------------------+" >> $MESSAGE
+  echo "Top 20 processes which consuming high CPU" >> $MESSAGE
+  echo "+------------------------------------------------------------------+" >> $MESSAGE
+  echo "$(top -bn1 | head -20)" >> $MESSAGE
+  echo "" >> $MESSAGE
+  echo "+------------------------------------------------------------------+" >> $MESSAGE
+  echo "Top 10 Processes which consuming high CPU using the ps command" >> $MESSAGE
+  echo "+------------------------------------------------------------------+" >> $MESSAGE
+  echo "$(ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10)" >> $MESSAGE
+  mail -s "$SUBJECT" "$TO" < $MESSAGE
+  rm /tmp/Mail.out
+else
+echo "Server CPU usage is in under threshold"
+  fi
+#!/bin/bash
+echo "You have to provide the path, start date and the end date"
+echo
+
+echo "Enter the path to start search"
+read fpath
+	if [ ! -d "$fpath" ]
+	then
+	    echo "Directory $fpath  DOES NOT exists." 
+	    exit 1
+	fi
+
+isValidDate() {
+    local d="$1"
+    date "+%Y-%m-%d" -d "$d" > /dev/null  2>&1
+    if [ $? != 0 ]
+    then
+        echo "Entered date $d is NOT a valid YYYYMMDD date"
+        exit 1
+    fi
+}
+
+echo "Please enter the start date in the format YYYYMMDD"
+read strtdt
+isValidDate $strtdt
+
+echo "please enter the end date in the format YYYYMMDD"
+read enddt
+isValidDate $enddt
+	if [[ "$enddt" < "$strtdt" ]]
+	then
+	   echo "End date can not be smaller than start date."
+	   exit 1
+	fi
+
+touch -t ${strtdt}0000 /tmp/newerstart
+touch -t ${enddt}2359 /tmp/newerend
+ echo "+-------------------------------------------------------------+"
+echo "Below are the list of files as per directory and dates entered "
+echo "+--------------------------------------------------------------+"
+#find ./ \( -newer /tmp/newerstart -a \! -newer /tmp/newerend \) -print
+find $fpath \( -newer /tmp/newerstart -a \! -newer /tmp/newerend \) -exec ls -l {} \;
+
+#!/bin/bash printf "Memory\t\tDisk\t\tCPU\n" > /tmp/memend=$((SECONDS+20))m=5while [ $SECONDS -lt $end ];do        MEMORY=$(free -m | awk 'NR==2{printf "%.2f%%\t\t", $3*100/$2 }')        DISK=$(df -h | awk '$NF=="/"{printf "%s\t\t", $5}')        CPU=$(top -bn1 | grep load | awk '{printf "%.2f%%\t\t\n", $(NF-2)}')        echo "$MEMORY$DISK$CPU" >> /tmp/mem        cpuuse=$(cat /proc/loadavg | awk '{print $3}'|cut -f 1 -d ".")        memuse=$(free -m | awk 'NR==2{printf "%.2f%%\t\t", $3*100/$2 }' | cut -f 1 -d ".")        diskuse=$(df -h | awk '$NF=="/"{printf "%s\t\t", $5}' | cut -f 1 -d "%")        if [ $cpuuse -lt 0 ] || [ $memuse -gt 10 ] || [ $diskuse -lt 20 ];        then           SUBJECT="ATTENTION: Memory/disk space/cpu is high on $(hostname) at $(date)"           msg=$(echo Memory used is $MEMORY, CPU is $CPU, Disk consumed $DISK)           mail -s "$SUBJECT" anoopd1994@gmail.com <<< "$msg"        else           echo all resources are under limit        fisleep 5done
+
+#!/bin/bash printf "Memory\t\tDisk\t\tCPU\n" > /tmp/memend=$((SECONDS+20))m=5while [ $SECONDS -lt $end ];do        MEMORY=$(free -m | awk 'NR==2{printf "%.2f%%\t\t", $3*100/$2 }')        DISK=$(df -h | awk '$NF=="/"{printf "%s\t\t", $5}')        CPU=$(top -bn1 | grep load | awk '{printf "%.2f%%\t\t\n", $(NF-2)}')        echo "$MEMORY$DISK$CPU" >> /tmp/mem        cpuuse=$(cat /proc/loadavg | awk '{print $3}'|cut -f 1 -d ".")        memuse=$(free -m | awk 'NR==2{printf "%.2f%%\t\t", $3*100/$2 }' | cut -f 1 -d ".")        diskuse=$(df -h | awk '$NF=="/"{printf "%s\t\t", $5}' | cut -f 1 -d "%")        if [ $cpuuse -lt 0 ] || [ $memuse -gt 10 ] || [ $diskuse -lt 20 ];        then           SUBJECT="ATTENTION: Memory/disk space/cpu is high on $(hostname) at $(date)"           msg=$(echo Memory used is $MEMORY, CPU is $CPU, Disk consumed $DISK)           mail -s "$SUBJECT" anoopd1994@gmail.com <<< "$msg"        else           echo all resources are under limit        fisleep 5done

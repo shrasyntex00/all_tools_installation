@@ -1,0 +1,19 @@
+squ_6ace97895693536eb385118edb96f74deb42faa4
+
+ tools {
+    maven 'maven3.8.7'
+  }
+
+
+chmod u+x *.sh
+
+
+ln -s /opt/apache-tomcat-9.0.71/bin/startup.sh /usr/bin/startTomcat
+
+
+ln -s /opt/apache-tomcat-9.0.71/bin/shutdown.sh /usr/bin/stopTomcat
+
+
+unzip apache-tomcat-9.0.71.zip
+
+/opt/apache-tomcat-9.0.71/webapps
