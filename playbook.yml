@@ -1,0 +1,33 @@
+---
+- host: all
+  become: true
+  tasks:
+    - name: "Download war file"
+      maven_artifact:
+        group_id: com.efsavage
+        artifact_id: hello-world-war
+        extension: war
+        version: 1.0.0
+        repository_url: "http://52.66.196.160:8081/repository/hello-release/"
+        username: admin
+        password: 12345
+        dest: "/tmp/hello-world-war-1.0.0.war"
+        mode: '0644'
+   - name: Copy the war file
+     copy:
+        src: /tmp/hello-world-war-1.0.0.war
+        dest: /usr/local/apache-tomcat-10.0.27/webapps/
+        remote_src: yes
+S
+- name: play1
+  hosts: tomcat
+  become: yes
+  tasks:
+    - name: copying file to tomcat server
+      copy:
+        src: /var/lib/jenkins/workspace/jfrog_download/target/{{ version }}/jenkins-git-integration.war
+        dest: /opt/apache-tomcat-10.0.27/webapps/
+      notify: "Restart tomcat"   handlers:
+    - name: "Restart tomcat"
+      shell: tomcatdown
+      shell: tomcatup
