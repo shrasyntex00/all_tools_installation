@@ -1,0 +1,91 @@
+1)What is Ansible Template?
+2)What is Ansible playbook ?
+3)Ansible playbook sample
+4)What do you know about Ansible inventory  and it's usage?
+5)What is Ansible tower? (*/*/*/*/*)
+--Job Templates, workflow Templates, To run multiple playbooks.
+6)Jenkins CI/CD flow?
+7) jenkinsfile:scripting and declaritive pipeline
+8)What is multi branching pipeline? 
+9)(Showed a sample jenkins file) . Explain the stages in that file and how to improve that pipeline? And do you find any issues in that pipeline?
+10)How to configure credentials in jenkins?
+11)How to configure ansible with jenkins?
+12)How to retrieve the build artifact from remote repo and deploy it in servers ?
+13)Most complex issue that you fixed in your previous project?
+14)maven lifecycle
+15) Ansible variables (*/*/*/*/*)
+16)How to stop and restart the  tomcat machines once after another using playbook?-----
+17)How to configure the repository ?
+18)How to handle the dynamic version in Nexus repository? (*/*/*/*/*) 
+19)How to use Ansible Handler ?
+20)Agent based container how to use? Conatiner based jenkins agent. (*/*/*/*/*)
+21)How many jobs is preferable if same code used for different environment deployment ?
+22)Ansible modules
+23)shared Libraries in jenkins (*/*/*/*/*)
+24) difference between maven install and maven deploy
+25)what ansible module required to download particular application package from the repository ?
+26)How to integrate DB in pipeline ?
+27)jenkins pipeline stages and How to integrate with each tool stage by stage?
+28)What are roles and responsibilities of previous project ?
+29) how jenkins will know which branch is triggering the job (multi branch pipeline) env variable 
+30) ansible jenkins configuration
+31) how you will call ansible using shell scripiting (*/*/*/*/*)
+32) how jenkins will know which ansible server to trigger (env parameters like group name)
+33) what is the recent challange you faced
+34) install and deploy
+35) snapshot and release
+36) which scriting language did u used
+
+1.    How Do You Update A Live Heavy Traffic Site With Minimum Or Zero Down Time?
+2.    Script to monitor health of a URL --> using Nginx Load balancer */*/
+3.    Load Balancing in AWS
+4.    Devops CI/CD Automation
+5.    How do I make sure that same version of git code can be deployed into different environments?
+6.    Experience implementing Continuous Integration
+7.    How will you to check out the code from the Git repo in Jenkins?  
+8.    What is multi-branching?
+9.    How will Jenkins know which branch code it’s building?
+
+
+1)What tools you have exp?
+2)Any other services/tools? 
+3)Any SCM tool used in project?
+4)If ther is a microservices, can you give me the branching strategies followed in their build and release?
+5)What is use of feature branch and how it differs from master,release and other branches?
+6)When there are dev, test, prod cycle,...whr master branch code will be used (which env)?
+7)If there is an application/microservice 'user service' and there are two features need to be developed. So two feature branches are created. How these features will be moved to production based on branching strategies?
+8)What kind of pipelines you have worked?
+9)Have you used shared libraries?
+10)Use case of shared libraries?
+11)Why need shared libraries, use of shared librries? Give me one example of shared libraies?
+12)Describe any build stages used in jenkins pipeline, once the feature is ready in the branch?
+13)Developers has commited change in feature branch. Want to understand how webhook works and triggers the build?
+14)How will you remove the dependency from POM.xml (Qs based on his input) and how will you build packages?
+******* 
+15)Rephrase the same Qs: Stages of Jenkins pipleins for Java springboot application? 
+16)In which stage depedencies will be downloaded? 
+mvn package
+17)Life cycle of Maven?
+18)How are you using maven stage in declarative pipelines?
+19)In your shared library, what env variables are used and How those env variables were called?
+************    Environment Injector Plugin 
+20)What are you covering/doing in test stage? *****
+21)When will you upload jar/war/ear and how will you maintain the versioning of the package?
+****??????? shell script for version manintenance
+release manager will give the naming convension 
+22)Rephrase the same Qs: Whtr feature and master branch package version will be same?
+????????????
+23)How are you performing the deployment in 10 servers parallely with Ansible and Jenkins?
+by default only 5 servers can run parallely ??????????
+Setting the number of forks in ansible.cfg file
+If you have the processing power available and want to use more forks, you can set the number in ansible.cfg:
+[defaults]
+forks = 30
+while using adhoc commands -f 30
+24)How are you intergrating with Ansible for deployment?
+25)You are explaing abt ansible. But my Qs is how you do it with Jenkins pipeline to deploy same package to 10 servers?
+????
+26)Have you worked on ansible playbook?
+27)Describe the playbooks to do deployment of java application? What steps your playbook will have?
+28)Have you written playbooks or just consumed already written playbooks? 
+29)WHat are you doing in monitoring stage?
